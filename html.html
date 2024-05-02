@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #f4d6fd">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Циан</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <h1 style="background-color: #d6f3ff; font-size: 30px ">Аренда домиков (создание объявлений)</h1>
+    <div style="background-color: #d6f3ff; border:1px solid black; font-size: 22px">
+        <label for="agentstvo">Агенство:</label>
+        <input type="text" id="agentstvo" placeholder="Введите агенство">
+       <label for="zalog">Залог:</label>
+        <input type="number" id="zalog" placeholder="Введитие залог">
+        <label for="cena">Цена (руб.):</label>
+        <input type="number" id="cena" placeholder="Введите цену *">
+        <label for="FIOvlad">ФИО:</label>
+        <input type="text" id="FIOvlad" placeholder="Введите ФИО *">
+        <label for="FIOarend">Площадь (кв.м.):</label>
+        <input type="number" id="FIOarend" placeholder="Введите площадь *">
+        <button onclick="addhome()">Добавить объявление</button>
+    </div>
+    <ul class="home-item" id="home-list"></ul>
+    <script src="js.js"></script>
+</body>
+</html>

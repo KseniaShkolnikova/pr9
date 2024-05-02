@@ -1,0 +1,11 @@
+#home-list {
+    color: #052f42;
+    background: #f7eff8;
+}
+.home-item {
+border-top: 1px solid black;
+
+}
+.home-item button {
+    margin-left:30px;
+}
