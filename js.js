@@ -1,36 +1,43 @@
 let homes = [];
 function updatehomeList() {
+
     const homeList = document.getElementById('home-list');
-    homeList.innerHTML = '';
+    const modal = document.getElementById('myModal');
+
+    homeList.innerHTML = ''; // Очищаем список перед обновлением
     homes.forEach((home, index) => {
         const li = document.createElement('li');
         li.classList.add('home-item');
         li.textContent = home.displayInfo();
-
         const editButton = document.createElement('button');
-        editButton.textContent = 'Изменить дом';
+        editButton.textContent  = 'Изменить дом';
+        editButton.classList.add("btns");
+        editButton.style.border = null;
         editButton.onclick = function() {
+            modal.style.display='block';
             edithome(index);
         };
         li.appendChild(editButton);
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Удалить дом';
+        deleteButton.classList.add("btns");
+        deleteButton.style.border = null;
         deleteButton.onclick = function() {
             deletehome(index);
         };
         li.appendChild(deleteButton);
-
-        homeList.appendChild(li);
+        homeList.appendChild(li); // Добавляем элемент в список
     });
+
 }
+
 function addhome() {
     const agenstvoInput = document.getElementById('agentstvo');
     const zalogInput = document.getElementById('zalog');
     const cenaInput = document.getElementById('cena');
     const FIOvladInput = document.getElementById('FIOvlad');
     const ploshadInput = document.getElementById('FIOarend');
-
     if (agenstvoInput.value===""){
         agenstvoInput.value="нет"
     }
@@ -42,8 +49,6 @@ function addhome() {
     const cena = parseInt(cenaInput.value);
     const FIOvlad = FIOvladInput.value.trim();
     const ploshad = parseInt(ploshadInput.value);
-
-
     if ( zalog<0 || cena<=0 || FIOvlad==="" || ploshad<=10) {
       alert('В полях присутсвуют ошибки. Учтите следующие требования\n  1. Необходимо заполнить все поля, помеченные *\n  2. Площадь должна быть больше 10кв/м\n  3. Цена и залог не могут быть отрицательными');
     }
@@ -56,21 +61,22 @@ function addhome() {
         ploshad: ploshad,
         displayInfo: function () {
             if (agenstvo === "нет" || agenstvo === "" ){
-                return ` ${this.FIOvlad}  предоставляет уютный дом, площадью ${this.ploshad} кв/м для комфортного отдыха!!!   Залог: ${this.zalog}руб (возвращается после истечения срока сдачи) ------- Цена: ${this.cena}руб   Хорошего настроения и до новых встреч!`;
+                return `${this.FIOvlad}  предоставляет уютный дом, площадью ${this.ploshad} кв/м для комфортного отдыха!!!   Залог: ${this.zalog} руб  ---------------- Цена: ${this.cena} руб.`
             }
             else{
-                return `Агенство ${this.agenstvo} предоставляет уютный дом, площадью ${this.ploshad} кв/м для комфортного отдыха!!!   Залог: ${this.zalog}руб (возвращается после истечения срока сдачи) ------- Цена: ${this.cena}руб    ФИО арендодателя: ${this.FIOvlad}   Хорошего настроения и до новых встреч!`;
+                return `Агенство ${this.agenstvo} предоставляет уютный дом, площадью ${this.ploshad} кв/м для комфортного отдыха!!!   Залог: ${this.zalog} руб ---------------- Цена: ${this.cena} руб.`;
             }
         }
+
     };
         homes.push(home);
-        updatehomeList();
-        agenstvoInput.value = '';
-        zalogInput.value = '';
-        cenaInput.value = '';
-        FIOvladInput.value = '';
-        ploshadInput.value = '';
     }
+    updatehomeList();
+    agenstvoInput.value = '';
+    zalogInput.value = '';
+    cenaInput.value = '';
+    FIOvladInput.value = '';
+    ploshadInput.value = '';
 }
 function deletehome(index) {
     homes.splice(index, 1);
@@ -79,29 +85,43 @@ function deletehome(index) {
 
 function edithome(index) {
     const home = homes[index];
-    const newag = prompt('Укажите новое агенство:', home.agenstvo);
-    const newzal = parseInt(prompt('Введите новый залог:', home.zalog));
-    const newcena = parseInt(prompt('Введите новую цену *:', home.cena));
-    const newFIOv = prompt('Введите ваше ФИО *:', home.FIOvlad);
-    const newploshad = parseInt(prompt('Введите новую площадь *:', home.ploshad));
+    const newag = document.getElementById('newAgency').value;
+    const newFIOv = document.getElementById('newFIO').value;
+    const newzal = document.getElementById('newZal').value;
+    const newcena = document.getElementById('newCena').value;
+    const newploshad = document.getElementById('newPloshad').value;
+
     if (newag===""){
-        home.agenstvo.value="нет";
+        home.agenstvo="нет";
     }
-    else if (newzal=== null){
-        home.zalog.value=0;
+    if (newzal=== null){
+        home.zalog=0;
     }
-    else if(newag!==null){
+    if(newag!==null){
         home.agenstvo = newag;
     }
-    else if (newzal!==0){
+    if (newzal!==0){
         home.zalog= newzal;
     }
-    else if ( newzal<0 || newcena<=0 || newFIOv==="" || newploshad<10) {
-      alert('В полях присутсвуют ошибки. Учтите следующие требования\n  1. Необходимо заполнить все поля, помеченные *\n  2. Площадь должна быть больше 10кв/м\n  3. Цена и залог не могут быть отрицательными');
-         return;
+    if ( newzal<0 || newcena<=0 || newFIOv==="" || newploshad<10) {
+      alert(' Учтите следующие требования заполнения\n  1. Необходимо заполнить все поля, помеченные *\n  2. Площадь должна быть больше 10кв/м\n  3. Цена и залог не могут быть отрицательными');
+      return;
     }
-    home.cena = newcena;
-    home.FIOvlad = newFIOv;
-    home.ploshad = newploshad;
+    else{
+        home.cena = newcena;
+        home.FIOvlad = newFIOv;
+        home.ploshad = newploshad;
+
+    }
+    updatehomeList();
+    newag.value = '';
+    newFIOv.value = '';
+    newploshad.value = '';
+    newcena.value = '';
+    newzal.value = '';
+
+}
+function closeModal() {
+    document.getElementById('myModal').style.display = 'none';
     updatehomeList();
 }
